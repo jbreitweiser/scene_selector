@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dipydt44q5cuq"]
+
+[ext_resource type="Script" path="res://addons/scene-selector/scene_selector.gd" id="1_rdipt"]
+[ext_resource type="Texture2D" uid="uid://be7eyoqfjxwvx" path="res://addons/scene-selector/Add.svg" id="2_xj8x5"]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+offset_right = 60.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+script = ExtResource("1_rdipt")
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = false
+expand_icon = true
+item_count = 1
+popup/item_0/text = "Create new Scene..."
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(31, 31)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+tooltip_text = "Add a new scene."
+theme_override_colors/icon_normal_color = Color(0.321728, 0.321728, 0.321728, 1)
+theme_override_colors/icon_focus_color = Color(0.309904, 0.519464, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.182056, 0.413175, 1, 1)
+theme_override_colors/icon_hover_color = Color(0.977937, 0.977937, 0.977937, 1)
+icon = ExtResource("2_xj8x5")
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="item_selected" from="OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
