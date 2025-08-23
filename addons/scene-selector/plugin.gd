@@ -51,6 +51,8 @@ func _create_scene_selector() -> void:
 		_scene_tabbar.find_children("*", "Button", true, false)
 	) 
 	 
+	scene_changed.connect(_set_scene_selector)
+	_scene_tabbar.active_tab_rearranged.connect(_set_scene_selector)
 	_scene_tabbar.tab_changed.connect(_set_scene_selector)
 	_scene_tabbar.tab_selected.connect(_set_scene_selector)
 	_scene_tabbar.resized.connect(_size_changed)

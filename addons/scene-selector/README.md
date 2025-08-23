@@ -7,5 +7,6 @@ Godot editor plugin to remove the scene tabbar from the top of the script editor
 
 Change Log:
 
+1.0.2 - Fixed signal on scene change to work with 4.4.1.
 1.0.1 - Fixed new scene button to scale correctly to different screen sizes.  Added scene to contaon dropdown and button functionality.
 1.0 - Initial Release
