@@ -8,7 +8,26 @@ var _scene_selector: Container
 var _scene_tabbar: TabBar
 var _scene_tabbar_new_scene: Button
 
+var _ProjectPropertyTabNames = "SceneSelector/TabNames"
+
+
 func _enter_tree() -> void:
+	# Register a custom setting if it doesn't exist yet
+	if not ProjectSettings.has_setting(_ProjectPropertyTabNames):
+		## add default editors that do not show the tab selectors
+		ProjectSettings.set_setting(_ProjectPropertyTabNames, PackedStringArray(["Script", "AssetLib"]))
+		ProjectSettings.set_initial_value(_ProjectPropertyTabNames, PackedStringArray(["Script", "AssetLib"]))
+		ProjectSettings.add_property_info({
+			"name": _ProjectPropertyTabNames,
+			"type": TYPE_ARRAY,   # or TYPE_PACKED_STRING_ARRAY in Godot 4
+			"hint": PROPERTY_HINT_ARRAY_TYPE,
+			"hint_string": "String"
+			})
+		ProjectSettings.save()
+	else:
+		ProjectSettings.set_as_internal(_ProjectPropertyTabNames, false)
+
+
 	var top_level = get_editor_interface().get_base_control()
 	_editor_scene_container = first_or_null(
 		top_level.find_children("*", "EditorSceneTabs", true, false)
@@ -38,7 +57,10 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	_scene_selector.free()
 	_editor_scene_container.visible = true
-
+	if ProjectSettings.has_setting(_ProjectPropertyTabNames):
+		ProjectSettings.set_as_internal(_ProjectPropertyTabNames, true)
+		ProjectSettings.save()
+		
 
 func _create_scene_selector() -> void:
 	_scene_selector = scene_selector_scene.instantiate()
@@ -100,7 +122,9 @@ func _create_new_scene() -> void:
 
 
 func main_screen_print(screen_name) -> void:
-	if screen_name == "Script":
+	var names: PackedStringArray = ProjectSettings.get_setting(_ProjectPropertyTabNames)
+
+	if names.has(screen_name):
 		_editor_scene_container.visible = false
 	else:
 		_editor_scene_container.visible = true
